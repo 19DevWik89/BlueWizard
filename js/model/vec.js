@@ -1,50 +1,45 @@
-//**
-/* @class Vec
-/* @param{Number,Number} - x,y
-/* Used to control movement in a physical world
-*/
-export default class Vec {
+export default class Vec2 {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+    this.ax = null;
+    this.ay = null;
   }
-  getX() {
-    return this.x;
+  get angle() {
+    return Math.atan2(this.y, this.x);
   }
-  getY() {
-    return this.y;
+  add(v2) {
+    return new Vec2(this.x += v2.x, this.y += v2.y);
   }
-  add(v) {
-    return new Vec(this.x + v.x, this.y + v.y)
+  subtract(v2) {
+    return new Vec2(v2.x - this.x, v2.y - this.y);
   }
-  length() {
-    return Math.sqrt(this.x * this.x + this.y * this.y);
+  divideScalar(s) {
+    return new Vec2(this.x / s, this.y / s);
   }
-  angleBetween(v2) {
-    let x1 = this.x;
-    let x2 = v2.x;
-    let y1 = this.y;
-    let y2 = v2.y;
-    let l1 = this.length();
-    let l2 = v2.length();
-    return (x1 * x2) + (y1 * y2) / (l1 * l2);
+  distance(v2) {
+    v2.subtract(this);
+    return Math.sqrt(v2.x * v2.x + v2.y * v2.y);
   }
-  dotProduct(v2) {
-    return this.x * v2.x + this.y * v2.y;
+  dot(v2) {
+    let x = this.x * v2.x;
+    let y = this.y * v2.y;
+    return x + y;
+  }
+  magnitude() {
+    let x = Math.pow(this.x, 2);
+    let y = Math.pow(this.y, 2);
+    return Math.sqrt(x + y);
+  }
+  angleTo(v2) {
+    v2.subtract(this);
+    return v2.angle;
   }
   normalize() {
-    let l = this.length();
-    return new Vec(this.x / l, this.y / l);
+    return this.divideScalar(this.magnitude());
   }
-  addScaled(v, s) {
-    this.x += v * s;
-    this.y += v * s;
-  }
-  multiply(v) {
-    this.x *= v;
-    this.y *= v;
-  }
-  static angleBetween(v1, v2) {
-    return Math.acos(v1.dotProduct(v2) / v1.length() * v2.length())
-  }
+
+
 }
