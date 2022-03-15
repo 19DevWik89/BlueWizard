@@ -1,24 +1,34 @@
-export default function(w,h){
-  let can = document.createElement("canvas");
-  let layers={}
-  can.width=w;
-  can.height=h;
-  let ctx = can.getContext('2d');
-  document.body.appendChild(can);
+export default class View {
+  constructor(name,w,h) {
+    this.layerName = name;
+    this.element = document.createElement("canvas");
+    this.context = this.element.getContext('2d');
+    this.element.width = w;
+    this.element.height = h;
+    this.element.style.position = 'absolute';
+    View.layers[this.layerName] = this;
+  }
+  static layers = {};
 
-  return {
-    get_ctx(){
-      return ctx;
-    },
-    get_canvas(){
-      return can;
-    },
-    addLayer(name){
-      layers[name]={
-        canvas:document.createElement('canvas'),
-        ctx:this.canvas.getContext('2d'),
-      };
-      document.body.appendChild(layers[name].canvas)
-    }
-  };
+  get ctx() {
+    return this.context;
+  }
+  get width(){
+    return this.element.width;
+  }
+  set width(w){
+    this.element.width = w;
+  }
+  get height(){
+    return this.element.height;
+  }
+  set height(h){
+    this.element.height = h;
+  }
+
+  pushToDom() {
+    document.body.appendChild(this.element);
+    console.log(`New View ${this.name} has been pushed to the DOM`);
+  }
+
 }

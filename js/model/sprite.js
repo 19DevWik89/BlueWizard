@@ -1,11 +1,14 @@
-import Renderable from "./renderable.js";
-export default class extends Renderable{
+import PhysicsBody from "./physicsBody.js";
+export default class Sprite extends PhysicsBody{
   constructor(x,y,w,h){
-    super(x,y,w,h,null);
+    super(x,y,w,h);
     this.sequences={};
     this.currentSequence=null;
     this.currentSequenceFrames=null;
     this.frameNo=0;
+  }
+  setSequences(s){
+    this.sequences = s;
   }
   addSequence(name,images){
     this.sequences[name]=[];

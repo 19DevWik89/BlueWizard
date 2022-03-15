@@ -1,6 +1,6 @@
-import Vec from "./vej.js";
+import Vec from "./vec.js";
 export default class {
-  constructor(x,y){
+  constructor(x,y,w,h){
     this.x=x;
     this.y=y;
     this.vx=0;
@@ -33,12 +33,7 @@ export default class {
     this.y=p.y;
     log("set pos");
   }
-  get x(){
-    return this.x;
-  }
-  set x(val){
-    this.x=val;
-  }
+ 
   get acc(){
     log("get acc");
     return new Vec(this.ax,this.ay);
